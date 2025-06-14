@@ -95,7 +95,7 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
 
   if (totalItems === 0) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-100">
+      <div className="flex-1 flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-100 overflow-hidden">
         <div className="text-center">
           <h2 className="text-4xl font-bold text-gray-600 mb-4">No Dishes Available</h2>
           <p className="text-xl text-gray-500">Please check back later</p>
@@ -108,7 +108,7 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
     <div className="flex-1 bg-gradient-to-br from-amber-50 to-orange-100 p-0 overflow-hidden">
       <div className={`${getLayoutClasses()} w-full h-full gap-0`}>
         {hasHandPulledNoodles && (
-          <div className={`${getHandPulledNoodlesColSpan()}`}>
+          <div className={`${getHandPulledNoodlesColSpan()} overflow-hidden`}>
             <DishCard
               name="Hand Pulled Noodles"
               size="half"
@@ -117,7 +117,7 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
         )}
         
         {otherDishes.map((dish, index) => (
-          <div key={index} className={getOtherDishSpan(index)}>
+          <div key={index} className={`${getOtherDishSpan(index)} overflow-hidden`}>
             <DishCard
               name={dish}
               size="quarter"
@@ -126,7 +126,7 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
         ))}
         
         {specialActive && (
-          <div className={getOtherDishSpan(otherDishes.length)}>
+          <div className={`${getOtherDishSpan(otherDishes.length)} overflow-hidden`}>
             <DishCard
               name="Special"
               isSpecial={true}

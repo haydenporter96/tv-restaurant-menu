@@ -28,7 +28,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-amber-50 to-orange-100">
+    <div className="h-screen w-screen flex flex-col bg-gradient-to-br from-amber-50 to-orange-100 overflow-hidden">
       <Header />
       
       <MenuDisplay 
