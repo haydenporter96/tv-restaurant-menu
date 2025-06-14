@@ -9,27 +9,8 @@ interface DishCardProps {
 }
 
 const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size }) => {
-  const getSizeClasses = () => {
-    switch (size) {
-      case 'small':
-        return 'w-80 h-48'; // 320x192px
-      case 'medium':
-        return 'w-96 h-64'; // 384x256px
-      case 'large':
-        return 'w-112 h-80'; // 448x320px
-      case 'xlarge':
-        return 'w-128 h-96'; // 512x384px
-      case 'half':
-        return 'w-full h-full'; // Takes half the container space
-      case 'quarter':
-        return 'w-full h-full'; // Takes quarter of container space
-      default:
-        return 'w-96 h-64';
-    }
-  };
-
   return (
-    <div className={`${getSizeClasses()} border-4 border-amber-600 rounded-xl bg-gradient-to-br from-amber-50 to-orange-100`}>
+    <div className="w-full h-full border-4 border-amber-600 rounded-none bg-gradient-to-br from-amber-50 to-orange-100">
       <div className="h-full flex flex-col justify-center items-center p-6">
         {isSpecial ? (
           <div className="text-center">

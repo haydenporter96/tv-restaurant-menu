@@ -20,77 +20,77 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
     if (totalItems === 0) return '';
     
     if (hasHandPulledNoodles) {
-      // Hand Pulled Noodles gets priority layout
-      if (totalOtherItems === 0) {
-        // Only Hand Pulled Noodles
-        return 'grid grid-cols-1 h-full';
-      } else if (totalOtherItems === 1) {
-        // Hand Pulled Noodles + 1 other (50/50 split)
-        return 'grid grid-cols-2 gap-8 h-full';
+      // Hand Pulled Noodles gets priority layout - always takes left half
+      if (totalOtherItems === 1) {
+        // 50/50 split
+        return 'grid grid-cols-2 h-full';
       } else if (totalOtherItems === 2) {
-        // Hand Pulled Noodles takes half, other 2 split the other half
-        return 'grid grid-cols-4 gap-4 h-full';
+        // HPN takes left half, other 2 stack vertically on right half
+        return 'grid grid-cols-2 grid-rows-2 h-full';
       } else if (totalOtherItems === 3) {
-        // Hand Pulled Noodles takes half, other 3 in grid on other half
-        return 'grid grid-cols-4 gap-4 h-full';
+        // HPN takes left half, other 3 in right half (1 top, 2 bottom)
+        return 'grid grid-cols-4 grid-rows-2 h-full';
       } else if (totalOtherItems === 4) {
-        // Hand Pulled Noodles takes half, other 4 in 2x2 grid
-        return 'grid grid-cols-4 gap-4 h-full';
+        // HPN takes left half, other 4 in 2x2 grid on right half
+        return 'grid grid-cols-4 grid-rows-2 h-full';
+      } else if (totalOtherItems === 5) {
+        // HPN takes left half, other 5 in right half
+        return 'grid grid-cols-6 grid-rows-2 h-full';
       } else {
-        // 5+ items total, Hand Pulled Noodles takes half, others split remaining
-        return 'grid grid-cols-6 gap-2 h-full';
+        // Only HPN
+        return 'grid grid-cols-1 h-full';
       }
     } else {
-      // No Hand Pulled Noodles, regular grid
+      // No Hand Pulled Noodles, regular balanced grid
       switch (totalItems) {
         case 1:
           return 'grid grid-cols-1 h-full';
         case 2:
-          return 'grid grid-cols-2 gap-8 h-full';
+          return 'grid grid-cols-2 h-full';
         case 3:
-          return 'grid grid-cols-3 gap-6 h-full';
+          return 'grid grid-cols-3 h-full';
         case 4:
-          return 'grid grid-cols-2 gap-6 h-full';
+          return 'grid grid-cols-2 grid-rows-2 h-full';
         case 5:
-          return 'grid grid-cols-3 gap-4 h-full';
+          return 'grid grid-cols-3 grid-rows-2 h-full';
         case 6:
-          return 'grid grid-cols-3 gap-4 h-full';
+          return 'grid grid-cols-3 grid-rows-2 h-full';
         default:
           return 'grid grid-cols-1 h-full';
       }
     }
   };
 
-  const getHandPulledNoodlesSize = () => {
-    if (totalOtherItems === 0) return 'xlarge'; // 512x384px
-    if (totalOtherItems <= 2) return 'half'; // Half container space
-    return 'half'; // Still half for more items
-  };
-
-  const getOtherDishSize = () => {
-    if (!hasHandPulledNoodles) {
-      // No Hand Pulled Noodles, use regular sizing
-      switch (totalItems) {
-        case 1: return 'xlarge'; // 512x384px
-        case 2: return 'large';  // 448x320px
-        case 3: return 'medium'; // 384x256px
-        case 4: return 'medium'; // 384x256px
-        case 5: return 'small';  // 320x192px
-        case 6: return 'small';  // 320x192px
-        default: return 'medium';
-      }
-    } else {
-      // With Hand Pulled Noodles, others are smaller
-      if (totalOtherItems <= 2) return 'quarter'; // Quarter container space
-      return 'quarter'; // Still quarter for more items
-    }
-  };
-
   const getHandPulledNoodlesColSpan = () => {
-    if (totalOtherItems === 0) return 'col-span-1';
-    if (totalOtherItems === 1) return 'col-span-1';
-    if (totalOtherItems <= 4) return 'col-span-2';
-    return 'col-span-3';
+    if (totalOtherItems === 0) return 'col-span-1 row-span-2';
+    if (totalOtherItems === 1) return 'col-span-1 row-span-2';
+    if (totalOtherItems === 2) return 'col-span-1 row-span-2';
+    if (totalOtherItems === 3) return 'col-span-2 row-span-2';
+    if (totalOtherItems === 4) return 'col-span-2 row-span-2';
+    if (totalOtherItems === 5) return 'col-span-3 row-span-2';
+    return 'col-span-1 row-span-2';
+  };
+
+  const getOtherDishSpan = (index: number) => {
+    if (!hasHandPulledNoodles) {
+      // Regular layouts without HPN
+      if (totalItems === 5) {
+        // First item spans 2 columns for balance
+        return index === 0 ? 'col-span-2' : 'col-span-1';
+      }
+      return 'col-span-1';
+    } else {
+      // With HPN layouts
+      if (totalOtherItems === 3) {
+        // First item spans 2 columns, others span 1
+        return index === 0 ? 'col-span-2' : 'col-span-1';
+      }
+      if (totalOtherItems === 5) {
+        // First item spans 2 columns for balance
+        return index === 0 ? 'col-span-2' : 'col-span-1';
+      }
+      return 'col-span-1';
+    }
   };
 
   if (totalItems === 0) {
@@ -105,32 +105,35 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
   }
 
   return (
-    <div className="flex-1 bg-gradient-to-br from-amber-50 to-orange-100 p-8">
-      <div className={`${getLayoutClasses()} min-h-full`}>
+    <div className="flex-1 bg-gradient-to-br from-amber-50 to-orange-100 p-0 overflow-hidden">
+      <div className={`${getLayoutClasses()} w-full h-full gap-0`}>
         {hasHandPulledNoodles && (
           <div className={`${getHandPulledNoodlesColSpan()}`}>
             <DishCard
               name="Hand Pulled Noodles"
-              size={getHandPulledNoodlesSize()}
+              size="half"
             />
           </div>
         )}
         
         {otherDishes.map((dish, index) => (
-          <DishCard
-            key={index}
-            name={dish}
-            size={getOtherDishSize()}
-          />
+          <div key={index} className={getOtherDishSpan(index)}>
+            <DishCard
+              name={dish}
+              size="quarter"
+            />
+          </div>
         ))}
         
         {specialActive && (
-          <DishCard
-            name="Special"
-            isSpecial={true}
-            specialText={specialText}
-            size={getOtherDishSize()}
-          />
+          <div className={getOtherDishSpan(otherDishes.length)}>
+            <DishCard
+              name="Special"
+              isSpecial={true}
+              specialText={specialText}
+              size="quarter"
+            />
+          </div>
         )}
       </div>
     </div>
