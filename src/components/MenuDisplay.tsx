@@ -108,17 +108,33 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
 
   if (totalItems === 0) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-100 overflow-hidden">
+      <div 
+        className="flex-1 flex items-center justify-center overflow-hidden"
+        style={{
+          backgroundImage: "url('/images/background.png')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
         <div className="text-center">
-          <h2 className="text-4xl font-bold text-gray-600 mb-4">No Dishes Available</h2>
-          <p className="text-xl text-gray-500">Please check back later</p>
+          <h2 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">No Dishes Available</h2>
+          <p className="text-xl text-white drop-shadow-lg">Please check back later</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 bg-gradient-to-br from-amber-50 to-orange-100 p-0 overflow-hidden">
+    <div 
+      className="flex-1 p-0 overflow-hidden"
+      style={{
+        backgroundImage: "url('/images/background.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
       <div className={`${getLayoutClasses()} w-full h-full gap-0`}>
         {hasHandPulledNoodles && (
           <div className={`${getHandPulledNoodlesColSpan()} overflow-hidden`}>

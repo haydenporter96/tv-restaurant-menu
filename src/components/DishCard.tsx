@@ -9,28 +9,34 @@ interface DishCardProps {
 }
 
 const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size }) => {
+  // Map dish names to image file names
+  const getImagePath = (dishName: string) => {
+    const imageMap: { [key: string]: string } = {
+      "Hand Pulled Noodles": "/images/hand-pulled-noodles.png",
+      "Dumplings": "/images/dumplings.png",
+      "Jasmine Rice": "/images/jasmine-rice.png",
+      "Pork Belly & Spinach with Rice": "/images/pork-belly-spinach.png",
+      "Smashed Cucumber Salad": "/images/cucumber-salad.png",
+      "Special": "/images/special.png"
+    };
+    
+    return imageMap[dishName] || "/images/placeholder.png";
+  };
+
+  const imagePath = isSpecial ? "/images/special.png" : getImagePath(name);
+
   return (
-    <div className="w-full h-full border-4 border-amber-600 rounded-none bg-gradient-to-br from-amber-50 to-orange-100 overflow-hidden">
-      <div className="h-full flex flex-col justify-center items-center p-6 overflow-hidden">
-        {isSpecial ? (
-          <div className="text-center overflow-hidden">
-            <div className="bg-red-600 text-white px-4 py-2 rounded-full mb-4">
-              <span className="text-lg font-bold">TODAY'S SPECIAL</span>
-            </div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-2 break-words">{specialText || "Special Dish"}</h3>
-            <div className="text-sm text-gray-600 bg-white/60 px-3 py-1 rounded">
-              Custom Background Here
-            </div>
-          </div>
-        ) : (
-          <div className="text-center overflow-hidden">
-            <h3 className="text-2xl font-bold text-gray-800 mb-4 break-words">{name}</h3>
-            <div className="text-sm text-gray-600 bg-white/60 px-3 py-1 rounded">
-              Dish Image Placeholder
-            </div>
-          </div>
-        )}
-      </div>
+    <div className="w-full h-full overflow-hidden">
+      <img 
+        src={imagePath}
+        alt={isSpecial ? `Special: ${specialText}` : name}
+        className="w-full h-full object-cover"
+        onError={(e) => {
+          // Fallback to a default image if the specific image fails to load
+          const target = e.target as HTMLImageElement;
+          target.src = "/images/placeholder.png";
+        }}
+      />
     </div>
   );
 };
