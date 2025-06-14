@@ -9,7 +9,18 @@ interface MenuDisplayProps {
 
 const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, isSpecialActive }) => {
   const hasHandPulledNoodles = activeDishes.includes("Hand Pulled Noodles");
-  const otherDishes = activeDishes.filter(dish => dish !== "Hand Pulled Noodles");
+  
+  // Sort other dishes with Dumplings first to ensure it gets priority sizing
+  const sortOtherDishes = (dishes: string[]) => {
+    const otherDishes = dishes.filter(dish => dish !== "Hand Pulled Noodles");
+    const dumplings = otherDishes.find(dish => dish === "Dumplings");
+    const remainingDishes = otherDishes.filter(dish => dish !== "Dumplings");
+    
+    // Put Dumplings first if it exists, then add remaining dishes
+    return dumplings ? [dumplings, ...remainingDishes] : remainingDishes;
+  };
+  
+  const otherDishes = sortOtherDishes(activeDishes);
   const specialActive = isSpecialActive;
   
   const totalOtherItems = otherDishes.length + (specialActive ? 1 : 0);
@@ -35,7 +46,7 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
         // This case is now handled above as special case
         return 'grid grid-cols-2 h-full';
       } else if (totalOtherItems === 2) {
-        // HPN takes left half, other 2 stack vertically on right half
+        // HPN takes left half, other 2 stack vertically on right half  
         return 'grid grid-cols-2 grid-rows-2 h-full';
       } else if (totalOtherItems === 3) {
         // HPN takes left half, other 3 in right half (1 top, 2 bottom)
