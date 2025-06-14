@@ -1,4 +1,3 @@
-
 import React from 'react';
 import DishCard from './DishCard';
 
@@ -15,6 +14,12 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
   
   const totalOtherItems = otherDishes.length + (specialActive ? 1 : 0);
   const totalItems = activeDishes.length + (specialActive ? 1 : 0);
+
+  // Layout context for passing to DishCard components
+  const layoutContext = {
+    totalItems,
+    hasHandPulledNoodles
+  };
 
   const getLayoutClasses = () => {
     if (totalItems === 0) return '';
@@ -141,6 +146,7 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
             <DishCard
               name="Hand Pulled Noodles"
               size="half"
+              layoutContext={layoutContext}
             />
           </div>
         )}
@@ -150,6 +156,10 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
             <DishCard
               name={dish}
               size="quarter"
+              layoutContext={{
+                ...layoutContext,
+                isFirstOther: index === 0
+              }}
             />
           </div>
         ))}
@@ -161,6 +171,10 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
               isSpecial={true}
               specialText={specialText}
               size="quarter"
+              layoutContext={{
+                ...layoutContext,
+                isFirstOther: otherDishes.length === 0
+              }}
             />
           </div>
         )}
