@@ -5,7 +5,7 @@ interface DishCardProps {
   name: string;
   isSpecial?: boolean;
   specialText?: string;
-  size: 'small' | 'medium' | 'large' | 'xlarge';
+  size: 'small' | 'medium' | 'large' | 'xlarge' | 'half' | 'quarter';
 }
 
 const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size }) => {
@@ -19,13 +19,17 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size 
         return 'w-112 h-80'; // 448x320px
       case 'xlarge':
         return 'w-128 h-96'; // 512x384px
+      case 'half':
+        return 'w-full h-full'; // Takes half the container space
+      case 'quarter':
+        return 'w-full h-full'; // Takes quarter of container space
       default:
         return 'w-96 h-64';
     }
   };
 
   return (
-    <div className={`${getSizeClasses()} border-4 border-amber-600 rounded-xl bg-gradient-to-br from-amber-50 to-orange-100 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105`}>
+    <div className={`${getSizeClasses()} border-4 border-amber-600 rounded-xl bg-gradient-to-br from-amber-50 to-orange-100`}>
       <div className="h-full flex flex-col justify-center items-center p-6">
         {isSpecial ? (
           <div className="text-center">
