@@ -19,10 +19,15 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
   const getLayoutClasses = () => {
     if (totalItems === 0) return '';
     
+    // Special case: exactly 2 total items including Hand Pulled Noodles
+    if (hasHandPulledNoodles && totalItems === 2) {
+      return 'grid grid-cols-2 h-full';
+    }
+    
     if (hasHandPulledNoodles) {
       // Hand Pulled Noodles gets priority layout - always takes left half
       if (totalOtherItems === 1) {
-        // 50/50 split
+        // This case is now handled above as special case
         return 'grid grid-cols-2 h-full';
       } else if (totalOtherItems === 2) {
         // HPN takes left half, other 2 stack vertically on right half
@@ -62,6 +67,9 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
   };
 
   const getHandPulledNoodlesColSpan = () => {
+    // Special case: exactly 2 total items including Hand Pulled Noodles
+    if (totalItems === 2) return 'col-span-1 row-span-1';
+    
     if (totalOtherItems === 0) return 'col-span-1 row-span-2';
     if (totalOtherItems === 1) return 'col-span-1 row-span-2';
     if (totalOtherItems === 2) return 'col-span-1 row-span-2';
@@ -72,6 +80,11 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
   };
 
   const getOtherDishSpan = (index: number) => {
+    // Special case: exactly 2 total items including Hand Pulled Noodles
+    if (hasHandPulledNoodles && totalItems === 2) {
+      return 'col-span-1 row-span-1';
+    }
+    
     if (!hasHandPulledNoodles) {
       // Regular layouts without HPN
       if (totalItems === 5) {
