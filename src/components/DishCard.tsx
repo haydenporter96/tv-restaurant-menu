@@ -49,12 +49,15 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
     };
     
     const abbrev = dishAbbreviations[dishName];
-    if (!abbrev) return `/images/placeholder${sizeSuffix}.png`;
+    if (!abbrev) return `/images/placeholder${sizeSuffix}.jpg`;
     
-    return `/images/${abbrev}${sizeSuffix}.png`;
+    return `/images/${abbrev}${sizeSuffix}.jpg`;
   };
 
-  const imagePath = isSpecial ? `/images/spec${getImageSizeSuffix()}.png` : getImagePath(name);
+  const imagePath = isSpecial ? `/images/spec${getImageSizeSuffix()}.jpg` : getImagePath(name);
+
+  // Log the image path for debugging
+  console.log(`Loading image for ${name}: ${imagePath}`);
 
   return (
     <div className="w-full h-full overflow-hidden">
@@ -63,9 +66,13 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
         alt={isSpecial ? `Special: ${specialText}` : name}
         className="w-full h-full object-cover"
         onError={(e) => {
+          console.log(`Failed to load image: ${imagePath}`);
           // Fallback to a default image if the specific image fails to load
           const target = e.target as HTMLImageElement;
-          target.src = "/images/placeholder.png";
+          target.src = "/images/placeholder.jpg";
+        }}
+        onLoad={() => {
+          console.log(`Successfully loaded image: ${imagePath}`);
         }}
       />
     </div>
