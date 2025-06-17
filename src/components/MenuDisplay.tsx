@@ -128,7 +128,7 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
       <div 
         className="flex-1 flex items-center justify-center overflow-hidden"
         style={{
-          backgroundImage: "url('/images/BACKGROUND.jpg')",
+          backgroundImage: "url('/lovable-uploads/40680c7b-f861-4a00-9539-85052dadddc8.png')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
@@ -146,7 +146,7 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
     <div 
       className="flex-1 p-0 overflow-hidden"
       style={{
-        backgroundImage: "url('/images/BACKGROUND.jpg')",
+        backgroundImage: "url('/lovable-uploads/40680c7b-f861-4a00-9539-85052dadddc8.png')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'

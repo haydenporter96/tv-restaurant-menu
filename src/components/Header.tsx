@@ -5,8 +5,8 @@ const Header = () => {
   return (
     <header className="overflow-hidden" style={{ height: '120px' }}>
       <img 
-        src="/images/header.jpg"
-        alt="Restaurant Header"
+        src="/lovable-uploads/fbb940dc-fdcf-48fd-9586-5c3df39a248e.png"
+        alt="BIB Noodle Bar Header"
         className="w-full h-full object-cover"
         onError={(e) => {
           // Fallback to gradient background if header image fails to load
