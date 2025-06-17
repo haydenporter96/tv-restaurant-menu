@@ -14,59 +14,47 @@ interface DishCardProps {
 }
 
 const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size, layoutContext }) => {
-  // Determine the exact image size suffix based on precise layout calculations
-  // Total display: 1920x1080, Header: 120px, Menu area: 1920x960
+  // Determine the layout suffix based on your naming convention
   const getImageSizeSuffix = () => {
     if (!layoutContext) return '';
     
-    const { totalItems, hasHandPulledNoodles, isFirstOther } = layoutContext;
+    const { totalItems, hasHandPulledNoodles } = layoutContext;
     
-    if (name === "Hand Pulled Noodles") {
-      // HPN sizing based on total items - always takes left half or full width
-      if (totalItems === 1) return '-1920x960'; // Full menu area
-      if (totalItems === 2) return '-960x960'; // Left half, square
-      if (totalItems >= 3 && totalItems <= 4) return '-960x960'; // Left half, square
-      if (totalItems >= 5) return '-960x960'; // Left half, square
-    } else {
-      // Other dishes sizing
-      if (!hasHandPulledNoodles) {
-        // No HPN layouts - dishes fill entire menu area
-        if (totalItems === 1) return '-1920x960'; // Full menu area
-        if (totalItems === 2) return '-960x960'; // Half width, full height
-        if (totalItems === 3) return '-640x960'; // Third width, full height
-        if (totalItems === 4) return '-960x480'; // Half width, half height
-        if (totalItems === 5) return isFirstOther ? '-960x480' : '-480x480'; // First gets 2 cols, others 1 col
-        if (totalItems === 6) return '-640x480'; // Third width, half height
-      } else {
-        // With HPN layouts - dishes share right half (960px width)
-        if (totalItems === 2) return '-960x960'; // Right half, full height
-        if (totalItems === 3) return '-960x480'; // Right half, half height
-        if (totalItems === 4) return '-480x480'; // Quarter of menu area
-        if (totalItems === 5) return '-480x480'; // Quarter of menu area
-        if (totalItems === 6) return isFirstOther ? '-480x480' : '-320x480'; // Varied based on position
-      }
+    // Map total items and HPN presence to your layout naming
+    if (totalItems === 1) return '_1_dish';
+    if (totalItems === 2) return '_2_dish';
+    if (totalItems === 3) return '_3_dish';
+    if (totalItems === 4) {
+      return hasHandPulledNoodles ? '_4_dish_wn' : '_4_dish_nn';
     }
+    if (totalItems === 5) {
+      return hasHandPulledNoodles ? '_5_dish_wn' : '_5_dish_nn';
+    }
+    if (totalItems === 6) return '_6_dish';
     
     return '';
   };
 
-  // Map dish names to image file names with precise size suffix
+  // Map dish names to your abbreviations with layout suffix
   const getImagePath = (dishName: string) => {
     const sizeSuffix = getImageSizeSuffix();
     
-    const imageMap: { [key: string]: string } = {
-      "Hand Pulled Noodles": `/images/hand-pulled-noodles${sizeSuffix}.png`,
-      "Dumplings": `/images/dumplings${sizeSuffix}.png`,
-      "Jasmine Rice": `/images/jasmine-rice${sizeSuffix}.png`,
-      "Pork Belly & Spinach with Rice": `/images/pork-belly-spinach${sizeSuffix}.png`,
-      "Smashed Cucumber Salad": `/images/cucumber-salad${sizeSuffix}.png`,
-      "Special": `/images/special${sizeSuffix}.png`
+    const dishAbbreviations: { [key: string]: string } = {
+      "Hand Pulled Noodles": "hpn",
+      "Dumplings": "dump",
+      "Jasmine Rice": "jas",
+      "Pork Belly & Spinach with Rice": "bps",
+      "Smashed Cucumber Salad": "smash",
+      "Special": "spec"
     };
     
-    return imageMap[dishName] || `/images/placeholder${sizeSuffix}.png`;
+    const abbrev = dishAbbreviations[dishName];
+    if (!abbrev) return `/images/placeholder${sizeSuffix}.png`;
+    
+    return `/images/${abbrev}${sizeSuffix}.png`;
   };
 
-  const imagePath = isSpecial ? `/images/special${getImageSizeSuffix()}.png` : getImagePath(name);
+  const imagePath = isSpecial ? `/images/spec${getImageSizeSuffix()}.png` : getImagePath(name);
 
   return (
     <div className="w-full h-full overflow-hidden">
