@@ -89,6 +89,16 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
         "Smashed Cucumber Salad": "/lovable-uploads/43d6bb64-b0d0-47ce-9324-3046c16b2992.png"
       };
       return fiveDishWithNoodlesImages[name];
+    } else if (totalItems === 6) {
+      // 6-dish layout 
+      const sixDishImages: { [key: string]: string } = {
+        "Hand Pulled Noodles": "/lovable-uploads/ff1d1425-a90d-4cc9-920c-3d3af7ca745b.png",
+        "Dumplings": "/lovable-uploads/b1716ff4-2bde-4f8c-be76-6c1ffe8cfc13.png",
+        "Jasmine Rice": "/lovable-uploads/274417c6-abaa-418f-a12a-5b85f645ce3a.png",
+        "Pork Belly & Spinach with Rice": "/lovable-uploads/6d291047-e239-4269-885d-4a7f76078c45.png",
+        "Smashed Cucumber Salad": "/lovable-uploads/9109adbf-037f-4ee1-bb2f-315819791065.png"
+      };
+      return sixDishImages[name];
     }
     
     // Fallback to 1-dish layout for other layouts until updated
@@ -116,6 +126,8 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
       return "/lovable-uploads/c1f7135d-34bb-41d1-919d-c112ca6a56e5.png";
     } else if (totalItems === 5 && hasHandPulledNoodles) {
       return "/lovable-uploads/6dc7ad6e-dc63-4749-b08f-15735a21931e.png";
+    } else if (totalItems === 6) {
+      return "/lovable-uploads/ae9be7e1-3b0b-4625-a9f4-5e26d5830fe1.png";
     }
     // Fallback to default special image for other layouts
     return "/lovable-uploads/412247f5-934b-49ae-911b-ecbc9d0176a7.png";
