@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <header className="overflow-hidden" style={{ height: '120px' }}>
       <img 
-        src="/images/header.png"
+        src="/images/header.jpg"
         alt="Restaurant Header"
         className="w-full h-full object-cover"
         onError={(e) => {

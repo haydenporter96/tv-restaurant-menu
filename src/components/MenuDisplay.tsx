@@ -1,3 +1,4 @@
+
 import React from 'react';
 import DishCard from './DishCard';
 
@@ -127,7 +128,7 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
       <div 
         className="flex-1 flex items-center justify-center overflow-hidden"
         style={{
-          backgroundImage: "url('/images/background.png')",
+          backgroundImage: "url('/images/BACKGROUND.jpg')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
@@ -145,7 +146,7 @@ const MenuDisplay: React.FC<MenuDisplayProps> = ({ activeDishes, specialText, is
     <div 
       className="flex-1 p-0 overflow-hidden"
       style={{
-        backgroundImage: "url('/images/background.png')",
+        backgroundImage: "url('/images/BACKGROUND.jpg')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
