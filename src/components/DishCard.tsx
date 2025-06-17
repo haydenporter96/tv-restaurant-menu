@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 
 interface DishCardProps {
@@ -20,6 +19,7 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
   // Map dish names to their uploaded images based on layout
   const getImageForLayout = () => {
     const totalItems = layoutContext?.totalItems || 1;
+    const hasHandPulledNoodles = layoutContext?.hasHandPulledNoodles || false;
     
     if (totalItems === 1) {
       // 1-dish layout images
@@ -51,8 +51,8 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
         "Smashed Cucumber Salad": "/lovable-uploads/64dbb69c-93f3-4b34-b257-16687aad0857.png"
       };
       return threeDishImages[name];
-    } else if (totalItems === 4) {
-      // 4-dish layout images
+    } else if (totalItems === 4 && !hasHandPulledNoodles) {
+      // 4-dish layout without noodles
       const fourDishImages: { [key: string]: string } = {
         "Dumplings": "/lovable-uploads/2f2ab513-3463-456f-8cba-f95a411301ce.png",
         "Jasmine Rice": "/lovable-uploads/a754c612-7ef1-49b8-b312-47c2f536069a.png",
@@ -60,6 +60,16 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
         "Smashed Cucumber Salad": "/lovable-uploads/079eefb4-9612-4952-991b-c6d895450080.png"
       };
       return fourDishImages[name];
+    } else if (totalItems === 4 && hasHandPulledNoodles) {
+      // 4-dish layout with Hand Pulled Noodles
+      const fourDishWithNoodlesImages: { [key: string]: string } = {
+        "Hand Pulled Noodles": "/lovable-uploads/776f4971-8e8c-48ab-a611-30e9342aa8f9.png",
+        "Dumplings": "/lovable-uploads/a280166a-fe37-449e-aabf-a9cbd216597c.png",
+        "Jasmine Rice": "/lovable-uploads/396f6ac4-2ea8-4818-b2c5-d99ca2d98bcc.png",
+        "Pork Belly & Spinach with Rice": "/lovable-uploads/323c888f-de59-4aec-8c3e-b140401617f3.png",
+        "Smashed Cucumber Salad": "/lovable-uploads/be27c81a-65ca-4b0d-8c1c-c5d0073e3146.png"
+      };
+      return fourDishWithNoodlesImages[name];
     }
     
     // Fallback to 1-dish layout for other layouts until updated
@@ -75,9 +85,12 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
 
   const getSpecialImageForLayout = () => {
     const totalItems = layoutContext?.totalItems || 1;
+    const hasHandPulledNoodles = layoutContext?.hasHandPulledNoodles || false;
     
-    if (totalItems === 4) {
+    if (totalItems === 4 && !hasHandPulledNoodles) {
       return "/lovable-uploads/65d3a28f-8ad1-455a-9157-86ce7d8be3e5.png";
+    } else if (totalItems === 4 && hasHandPulledNoodles) {
+      return "/lovable-uploads/289ecb88-7e6a-4805-a1d0-900bbe51d2b5.png";
     } else if (totalItems === 3) {
       return "/lovable-uploads/39d7dd3d-0eec-4bde-b60b-54563ce13b60.png";
     }
