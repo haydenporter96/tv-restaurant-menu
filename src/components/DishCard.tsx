@@ -14,30 +14,28 @@ interface DishCardProps {
 }
 
 const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size, layoutContext }) => {
-  // Map dish names to your abbreviations
+  // Map dish names to actual uploaded image file names
   const getImagePath = (dishName: string) => {
-    const dishAbbreviations: { [key: string]: string } = {
-      "Hand Pulled Noodles": "hand_pulled_noodles",
-      "Dumplings": "dumplings", 
-      "Jasmine Rice": "jasmine_rice",
-      "Pork Belly & Spinach with Rice": "belly_pork_spinach",
-      "Smashed Cucumber Salad": "smashed_cucumber_salad",
-      "Special": "special_dish"
+    const dishImageMap: { [key: string]: string } = {
+      "Hand Pulled Noodles": "hpn_4_dish_wn.jpg",
+      "Dumplings": "dump_4_dish_wn.jpg", 
+      "Jasmine Rice": "jas_4_dish_wn.jpg",
+      "Pork Belly & Spinach with Rice": "bps_4_dish_wn.jpg",
+      "Smashed Cucumber Salad": "smash_4_dish_wn.jpg"
     };
     
-    const abbrev = dishAbbreviations[dishName];
-    if (!abbrev) {
-      console.log(`No abbreviation found for dish: ${dishName}`);
+    const imageFile = dishImageMap[dishName];
+    if (!imageFile) {
+      console.log(`No image mapping found for dish: ${dishName}`);
       return `/images/placeholder.jpg`;
     }
     
-    // Use the full descriptive names for the images
-    const imagePath = `/images/${abbrev}.jpg`;
+    const imagePath = `/images/${imageFile}`;
     console.log(`Loading image for ${dishName}: ${imagePath}`);
     return imagePath;
   };
 
-  const imagePath = isSpecial ? `/images/special_dish.jpg` : getImagePath(name);
+  const imagePath = isSpecial ? `/images/spec_4_dish_wn.jpg` : getImagePath(name);
 
   return (
     <div className="w-full h-full overflow-hidden">
