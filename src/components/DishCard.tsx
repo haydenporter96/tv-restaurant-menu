@@ -14,28 +14,24 @@ interface DishCardProps {
 }
 
 const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size, layoutContext }) => {
-  // Determine the layout suffix based on your naming convention
+  // Simplify the image naming to match uploaded files
   const getImageSizeSuffix = () => {
     if (!layoutContext) return '';
     
     const { totalItems, hasHandPulledNoodles } = layoutContext;
     
-    // Map total items and HPN presence to your layout naming
-    if (totalItems === 1) return '_1_dish';
-    if (totalItems === 2) return '_2_dish';
-    if (totalItems === 3) return '_3_dish';
-    if (totalItems === 4) {
-      return hasHandPulledNoodles ? '_4_dish_wn' : '_4_dish_nn';
-    }
-    if (totalItems === 5) {
-      return hasHandPulledNoodles ? '_5_dish_wn' : '_5_dish_nn';
-    }
-    if (totalItems === 6) return '_6_dish';
+    // Try simpler naming first - just the layout number
+    if (totalItems === 1) return '1';
+    if (totalItems === 2) return '2';
+    if (totalItems === 3) return '3';
+    if (totalItems === 4) return '4';
+    if (totalItems === 5) return '5';
+    if (totalItems === 6) return '6';
     
     return '';
   };
 
-  // Map dish names to your abbreviations with layout suffix
+  // Map dish names to your abbreviations
   const getImagePath = (dishName: string) => {
     const sizeSuffix = getImageSizeSuffix();
     
@@ -49,9 +45,20 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
     };
     
     const abbrev = dishAbbreviations[dishName];
-    if (!abbrev) return `/images/placeholder${sizeSuffix}.jpg`;
+    if (!abbrev) {
+      console.log(`No abbreviation found for dish: ${dishName}`);
+      return `/images/placeholder.jpg`;
+    }
     
-    return `/images/${abbrev}${sizeSuffix}.jpg`;
+    // Try different naming patterns
+    const possiblePaths = [
+      `/images/${abbrev}${sizeSuffix}.jpg`,
+      `/images/${abbrev}_${sizeSuffix}.jpg`,
+      `/images/${abbrev}.jpg`
+    ];
+    
+    console.log(`Trying paths for ${dishName}:`, possiblePaths);
+    return possiblePaths[0]; // Start with first pattern
   };
 
   const imagePath = isSpecial ? `/images/spec${getImageSizeSuffix()}.jpg` : getImagePath(name);
@@ -67,9 +74,20 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
         className="w-full h-full object-cover"
         onError={(e) => {
           console.log(`Failed to load image: ${imagePath}`);
-          // Fallback to a default image if the specific image fails to load
           const target = e.target as HTMLImageElement;
-          target.src = "/images/placeholder.jpg";
+          
+          // Try alternative naming patterns
+          if (imagePath.includes('_4_dish_wn')) {
+            const newPath = imagePath.replace('_4_dish_wn', '4');
+            console.log(`Trying alternative path: ${newPath}`);
+            target.src = newPath;
+          } else if (imagePath.includes('4.jpg')) {
+            const newPath = imagePath.replace('4.jpg', '.jpg');
+            console.log(`Trying fallback without number: ${newPath}`);
+            target.src = newPath;
+          } else {
+            target.src = "/images/placeholder.jpg";
+          }
         }}
         onLoad={() => {
           console.log(`Successfully loaded image: ${imagePath}`);
