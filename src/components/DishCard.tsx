@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 
 interface DishCardProps {
@@ -41,6 +40,16 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
         "Smashed Cucumber Salad": "/lovable-uploads/c841f3f7-4de5-4e24-a53c-4e5a297eca7b.png"
       };
       return twoDishImages[name];
+    } else if (totalItems === 3) {
+      // 3-dish layout images
+      const threeDishImages: { [key: string]: string } = {
+        "Hand Pulled Noodles": "/lovable-uploads/abadaf3e-3a31-41bb-8a28-5531120a77b6.png",
+        "Dumplings": "/lovable-uploads/9e2a908c-1aaf-47f3-b3d8-e8a7180e70e4.png",
+        "Jasmine Rice": "/lovable-uploads/025f79e1-d5d2-46a1-a72e-1279a0a6cb24.png",
+        "Pork Belly & Spinach with Rice": "/lovable-uploads/b4cb4b4f-f0ac-4dc9-8edc-fc460f3ff65d.png",
+        "Smashed Cucumber Salad": "/lovable-uploads/64dbb69c-93f3-4b34-b257-16687aad0857.png"
+      };
+      return threeDishImages[name];
     }
     
     // Fallback to 1-dish layout for other layouts until updated
@@ -54,7 +63,7 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
     return fallbackImages[name];
   };
 
-  const specialImage = isSpecial ? "/lovable-uploads/4c41024d-6ece-4ed3-9bc6-2a333a0e331b.png" : "/lovable-uploads/412247f5-934b-49ae-911b-ecbc9d0176a7.png";
+  const specialImage = isSpecial ? "/lovable-uploads/39d7dd3d-0eec-4bde-b60b-54563ce13b60.png" : "/lovable-uploads/412247f5-934b-49ae-911b-ecbc9d0176a7.png";
 
   const getCurrentImageSrc = () => {
     if (isSpecial) {
