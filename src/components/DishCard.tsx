@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 
 interface DishCardProps {
@@ -50,6 +51,15 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
         "Smashed Cucumber Salad": "/lovable-uploads/64dbb69c-93f3-4b34-b257-16687aad0857.png"
       };
       return threeDishImages[name];
+    } else if (totalItems === 4) {
+      // 4-dish layout images
+      const fourDishImages: { [key: string]: string } = {
+        "Dumplings": "/lovable-uploads/2f2ab513-3463-456f-8cba-f95a411301ce.png",
+        "Jasmine Rice": "/lovable-uploads/a754c612-7ef1-49b8-b312-47c2f536069a.png",
+        "Pork Belly & Spinach with Rice": "/lovable-uploads/e34f54f7-cfdf-41d0-bda1-35d45fcce085.png",
+        "Smashed Cucumber Salad": "/lovable-uploads/079eefb4-9612-4952-991b-c6d895450080.png"
+      };
+      return fourDishImages[name];
     }
     
     // Fallback to 1-dish layout for other layouts until updated
@@ -63,11 +73,21 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
     return fallbackImages[name];
   };
 
-  const specialImage = isSpecial ? "/lovable-uploads/39d7dd3d-0eec-4bde-b60b-54563ce13b60.png" : "/lovable-uploads/412247f5-934b-49ae-911b-ecbc9d0176a7.png";
+  const getSpecialImageForLayout = () => {
+    const totalItems = layoutContext?.totalItems || 1;
+    
+    if (totalItems === 4) {
+      return "/lovable-uploads/65d3a28f-8ad1-455a-9157-86ce7d8be3e5.png";
+    } else if (totalItems === 3) {
+      return "/lovable-uploads/39d7dd3d-0eec-4bde-b60b-54563ce13b60.png";
+    }
+    // Fallback to default special image for other layouts
+    return "/lovable-uploads/412247f5-934b-49ae-911b-ecbc9d0176a7.png";
+  };
 
   const getCurrentImageSrc = () => {
     if (isSpecial) {
-      return specialImage;
+      return getSpecialImageForLayout();
     } else {
       return getImageForLayout() || "/images/placeholder.jpg";
     }
