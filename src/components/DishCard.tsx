@@ -41,8 +41,17 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
         "Smashed Cucumber Salad": "/lovable-uploads/c841f3f7-4de5-4e24-a53c-4e5a297eca7b.png"
       };
       return twoDishImages[name];
+    } else if (totalItems === 3 && !hasHandPulledNoodles) {
+      // 3-dish layout without Hand Pulled Noodles
+      const threeDishNoNoodlesImages: { [key: string]: string } = {
+        "Dumplings": "/lovable-uploads/6e8581da-3f91-4a68-ae75-cce60badfdc4.png",
+        "Jasmine Rice": "/lovable-uploads/9d334e22-7c50-4a55-803e-0fa0081a7dc9.png",
+        "Pork Belly & Spinach with Rice": "/lovable-uploads/ce0a796b-78b4-47c5-bbcc-c53b11654ea3.png",
+        "Smashed Cucumber Salad": "/lovable-uploads/d45655f1-f0ab-4dbb-9ccd-74b0555568eb.png"
+      };
+      return threeDishNoNoodlesImages[name];
     } else if (totalItems === 3) {
-      // 3-dish layout images
+      // 3-dish layout with noodles
       const threeDishImages: { [key: string]: string } = {
         "Hand Pulled Noodles": "/lovable-uploads/abadaf3e-3a31-41bb-8a28-5531120a77b6.png",
         "Dumplings": "/lovable-uploads/9e2a908c-1aaf-47f3-b3d8-e8a7180e70e4.png",
@@ -116,7 +125,9 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
     const totalItems = layoutContext?.totalItems || 1;
     const hasHandPulledNoodles = layoutContext?.hasHandPulledNoodles || false;
     
-    if (totalItems === 4 && !hasHandPulledNoodles) {
+    if (totalItems === 3 && !hasHandPulledNoodles) {
+      return "/lovable-uploads/f6242254-0726-413d-a767-fb84cfdb90bc.png";
+    } else if (totalItems === 4 && !hasHandPulledNoodles) {
       return "/lovable-uploads/65d3a28f-8ad1-455a-9157-86ce7d8be3e5.png";
     } else if (totalItems === 4 && hasHandPulledNoodles) {
       return "/lovable-uploads/289ecb88-7e6a-4805-a1d0-900bbe51d2b5.png";
