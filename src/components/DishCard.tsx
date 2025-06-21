@@ -71,9 +71,9 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
       };
       return fourDishImages[name];
     } else if (totalItems === 4 && hasHandPulledNoodles) {
-      // Special handling for 4-dish layout with HPN when dumplings is disabled
-      // If this is the first other dish (taking dumpling's spot), use the "_ND" images
-      if (isFirstOther) {
+      // 4-dish layout with Hand Pulled Noodles
+      // Only use "_ND" images if this is NOT dumplings and it's the first other dish (replacing dumplings)
+      if (name !== "Dumplings" && isFirstOther) {
         const fourDishNoDumplingsImages: { [key: string]: string } = {
           "Jasmine Rice": "/lovable-uploads/2d32f305-b524-4011-b562-a2ce4f2b8589.png",
           "Pork Belly & Spinach with Rice": "/lovable-uploads/f329da00-dacc-4ec4-a88f-079185f4d210.png",
@@ -81,7 +81,7 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
         };
         return fourDishNoDumplingsImages[name];
       } else {
-        // Regular 4-dish HPN images for non-first dishes
+        // Regular 4-dish HPN images for all dishes when dumplings is present
         const fourDishWithNoodlesImages: { [key: string]: string } = {
           "Hand Pulled Noodles": "/lovable-uploads/776f4971-8e8c-48ab-a611-30e9342aa8f9.png",
           "Dumplings": "/lovable-uploads/a280166a-fe37-449e-aabf-a9cbd216597c.png",
