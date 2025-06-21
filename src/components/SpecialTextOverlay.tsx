@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface SpecialTextOverlayProps {
@@ -55,30 +54,30 @@ const SpecialTextOverlay: React.FC<SpecialTextOverlayProps> = ({ text, layoutCon
     const { totalItems, hasHandPulledNoodles, isFirstOther } = layoutContext;
     const textLength = text.length;
     
-    // Base font sizes for different layouts (in pixels)
-    let baseFontSize = 32;
+    // Increased base font sizes for better utilization of space
+    let baseFontSize = 40;
     
     if (totalItems === 1) {
-      baseFontSize = 48; // Large space, large text
+      baseFontSize = 72; // Much larger for huge space (1435x566)
     } else if (totalItems === 2) {
-      baseFontSize = 36; // Medium-large space
+      baseFontSize = 56; // Larger for big space (772x536)
     } else if (totalItems === 3) {
-      baseFontSize = 28; // Medium space
+      baseFontSize = 42; // Medium-large space
     } else if (totalItems === 4) {
       // Different sizes based on safe zone area
       if (hasHandPulledNoodles && !isFirstOther) {
-        baseFontSize = 22; // Smaller safe zone (379x253)
+        baseFontSize = 32; // Smaller safe zone (379x253)
       } else {
-        baseFontSize = 26; // Larger safe zone (489x351)
+        baseFontSize = 38; // Larger safe zone (489x351)
       }
     } else if (totalItems === 5) {
       if (!hasHandPulledNoodles) {
-        baseFontSize = 18; // Very narrow space (505x204)
+        baseFontSize = 26; // Very narrow space (505x204)
       } else {
-        baseFontSize = 22; // Small square space (379x253)
+        baseFontSize = 32; // Small square space (379x253)
       }
     } else if (totalItems === 6) {
-      baseFontSize = 16; // Smallest space (245x164)
+      baseFontSize = 22; // Smallest space (245x164)
     }
     
     // Adjust font size based on text length
@@ -96,7 +95,7 @@ const SpecialTextOverlay: React.FC<SpecialTextOverlayProps> = ({ text, layoutCon
     const finalSize = Math.round(baseFontSize * fontMultiplier);
     
     // Set minimum and maximum bounds
-    return Math.max(14, Math.min(finalSize, 64));
+    return Math.max(16, Math.min(finalSize, 96));
   };
 
   const safeZone = getSafeZone();
