@@ -51,7 +51,56 @@ const SpecialTextOverlay: React.FC<SpecialTextOverlayProps> = ({ text, layoutCon
     return { width: '300px', height: '200px', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' };
   };
 
+  const getDynamicFontSize = () => {
+    const { totalItems, hasHandPulledNoodles, isFirstOther } = layoutContext;
+    const textLength = text.length;
+    
+    // Base font sizes for different layouts (in pixels)
+    let baseFontSize = 32;
+    
+    if (totalItems === 1) {
+      baseFontSize = 48; // Large space, large text
+    } else if (totalItems === 2) {
+      baseFontSize = 36; // Medium-large space
+    } else if (totalItems === 3) {
+      baseFontSize = 28; // Medium space
+    } else if (totalItems === 4) {
+      // Different sizes based on safe zone area
+      if (hasHandPulledNoodles && !isFirstOther) {
+        baseFontSize = 22; // Smaller safe zone (379x253)
+      } else {
+        baseFontSize = 26; // Larger safe zone (489x351)
+      }
+    } else if (totalItems === 5) {
+      if (!hasHandPulledNoodles) {
+        baseFontSize = 18; // Very narrow space (505x204)
+      } else {
+        baseFontSize = 22; // Small square space (379x253)
+      }
+    } else if (totalItems === 6) {
+      baseFontSize = 16; // Smallest space (245x164)
+    }
+    
+    // Adjust font size based on text length
+    let fontMultiplier = 1;
+    if (textLength > 80) {
+      fontMultiplier = 0.7;
+    } else if (textLength > 50) {
+      fontMultiplier = 0.8;
+    } else if (textLength > 30) {
+      fontMultiplier = 0.9;
+    } else if (textLength < 15) {
+      fontMultiplier = 1.1;
+    }
+    
+    const finalSize = Math.round(baseFontSize * fontMultiplier);
+    
+    // Set minimum and maximum bounds
+    return Math.max(14, Math.min(finalSize, 64));
+  };
+
   const safeZone = getSafeZone();
+  const fontSize = getDynamicFontSize();
 
   return (
     <div 
@@ -62,8 +111,9 @@ const SpecialTextOverlay: React.FC<SpecialTextOverlayProps> = ({ text, layoutCon
         <span 
           className="drop-shadow-lg"
           style={{
-            fontSize: 'clamp(14px, 2.5vw, 32px)',
-            textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
+            fontSize: `${fontSize}px`,
+            textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+            lineHeight: '1.2'
           }}
         >
           {text}
