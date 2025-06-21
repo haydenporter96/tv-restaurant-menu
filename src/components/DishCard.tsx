@@ -62,10 +62,10 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
       };
       return threeDishImages[name];
     } else if (totalItems === 4 && !hasHandPulledNoodles) {
-      // 4-dish layout without noodles
+      // 4-dish layout without noodles - using the new Jasmine Rice image
       const fourDishImages: { [key: string]: string } = {
         "Dumplings": "/lovable-uploads/2f2ab513-3463-456f-8cba-f95a411301ce.png",
-        "Jasmine Rice": "/lovable-uploads/a754c612-7ef1-49b8-b312-47c2f536069a.png",
+        "Jasmine Rice": "/lovable-uploads/a3aa1680-f676-4315-988b-b4d5efde1fb4.png",
         "Pork Belly & Spinach with Rice": "/lovable-uploads/e34f54f7-cfdf-41d0-bda1-35d45fcce085.png",
         "Smashed Cucumber Salad": "/lovable-uploads/079eefb4-9612-4952-991b-c6d895450080.png"
       };
@@ -81,11 +81,11 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
         };
         return fourDishNoDumplingsImages[name];
       } else {
-        // Regular 4-dish HPN images for all dishes when dumplings is present
+        // Regular 4-dish HPN images for all dishes when dumplings is present - reverted to original Jasmine Rice
         const fourDishWithNoodlesImages: { [key: string]: string } = {
           "Hand Pulled Noodles": "/lovable-uploads/776f4971-8e8c-48ab-a611-30e9342aa8f9.png",
           "Dumplings": "/lovable-uploads/a280166a-fe37-449e-aabf-a9cbd216597c.png",
-          "Jasmine Rice": "/lovable-uploads/a3aa1680-f676-4315-988b-b4d5efde1fb4.png",
+          "Jasmine Rice": "/lovable-uploads/396f6ac4-2ea8-4818-b2c5-d99ca2d98bcc.png",
           "Pork Belly & Spinach with Rice": "/lovable-uploads/323c888f-de59-4aec-8c3e-b140401617f3.png",
           "Smashed Cucumber Salad": "/lovable-uploads/be27c81a-65ca-4b0d-8c1c-c5d0073e3146.png"
         };
