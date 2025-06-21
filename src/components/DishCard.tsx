@@ -62,10 +62,10 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
       };
       return threeDishImages[name];
     } else if (totalItems === 4 && !hasHandPulledNoodles) {
-      // 4-dish layout without noodles - using the new Jasmine Rice image
+      // 4-dish layout without noodles - using the updated Jasmine Rice image
       const fourDishImages: { [key: string]: string } = {
         "Dumplings": "/lovable-uploads/2f2ab513-3463-456f-8cba-f95a411301ce.png",
-        "Jasmine Rice": "/lovable-uploads/a3aa1680-f676-4315-988b-b4d5efde1fb4.png",
+        "Jasmine Rice": "/lovable-uploads/53c041d1-f566-4e0e-b262-bfb4813de6b5.png",
         "Pork Belly & Spinach with Rice": "/lovable-uploads/e34f54f7-cfdf-41d0-bda1-35d45fcce085.png",
         "Smashed Cucumber Salad": "/lovable-uploads/079eefb4-9612-4952-991b-c6d895450080.png"
       };
