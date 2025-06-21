@@ -70,13 +70,13 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
       };
       return fourDishImages[name];
     } else if (totalItems === 4 && hasHandPulledNoodles) {
-      // 4-dish layout with Hand Pulled Noodles - Use original 4-dish images for dumplings, 3-dish HPN for others
+      // 4-dish layout with Hand Pulled Noodles
       const fourDishWithNoodlesImages: { [key: string]: string } = {
         "Hand Pulled Noodles": "/lovable-uploads/776f4971-8e8c-48ab-a611-30e9342aa8f9.png",
-        "Dumplings": "/lovable-uploads/a280166a-fe37-449e-aabf-a9cbd216597c.png", // Keep original 4-dish HPN dumplings
-        "Jasmine Rice": "/lovable-uploads/025f79e1-d5d2-46a1-a72e-1279a0a6cb24.png", // Use 3-dish HPN for better fitting
-        "Pork Belly & Spinach with Rice": "/lovable-uploads/b4cb4b4f-f0ac-4dc9-8edc-fc460f3ff65d.png", // Use 3-dish HPN for better fitting
-        "Smashed Cucumber Salad": "/lovable-uploads/64dbb69c-93f3-4b34-b257-16687aad0857.png" // Use 3-dish HPN for better fitting
+        "Dumplings": "/lovable-uploads/a280166a-fe37-449e-aabf-a9cbd216597c.png",
+        "Jasmine Rice": "/lovable-uploads/396f6ac4-2ea8-4818-b2c5-d99ca2d98bcc.png",
+        "Pork Belly & Spinach with Rice": "/lovable-uploads/323c888f-de59-4aec-8c3e-b140401617f3.png",
+        "Smashed Cucumber Salad": "/lovable-uploads/be27c81a-65ca-4b0d-8c1c-c5d0073e3146.png"
       };
       return fourDishWithNoodlesImages[name];
     } else if (totalItems === 5 && !hasHandPulledNoodles) {
@@ -132,7 +132,6 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
     } else if (totalItems === 4 && !hasHandPulledNoodles) {
       return "/lovable-uploads/65d3a28f-8ad1-455a-9157-86ce7d8be3e5.png";
     } else if (totalItems === 4 && hasHandPulledNoodles) {
-      // Keep the original 4-dish with HPN special image
       return "/lovable-uploads/289ecb88-7e6a-4805-a1d0-900bbe51d2b5.png";
     } else if (totalItems === 3) {
       return "/lovable-uploads/39d7dd3d-0eec-4bde-b60b-54563ce13b60.png";
