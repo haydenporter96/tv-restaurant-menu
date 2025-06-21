@@ -85,7 +85,7 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
         const fourDishWithNoodlesImages: { [key: string]: string } = {
           "Hand Pulled Noodles": "/lovable-uploads/776f4971-8e8c-48ab-a611-30e9342aa8f9.png",
           "Dumplings": "/lovable-uploads/a280166a-fe37-449e-aabf-a9cbd216597c.png",
-          "Jasmine Rice": "/lovable-uploads/396f6ac4-2ea8-4818-b2c5-d99ca2d98bcc.png",
+          "Jasmine Rice": "/lovable-uploads/a3aa1680-f676-4315-988b-b4d5efde1fb4.png",
           "Pork Belly & Spinach with Rice": "/lovable-uploads/323c888f-de59-4aec-8c3e-b140401617f3.png",
           "Smashed Cucumber Salad": "/lovable-uploads/be27c81a-65ca-4b0d-8c1c-c5d0073e3146.png"
         };
