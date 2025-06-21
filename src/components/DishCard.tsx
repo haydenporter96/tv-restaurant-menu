@@ -20,6 +20,7 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
   const getImageForLayout = () => {
     const totalItems = layoutContext?.totalItems || 1;
     const hasHandPulledNoodles = layoutContext?.hasHandPulledNoodles || false;
+    const isFirstOther = layoutContext?.isFirstOther || false;
     
     if (totalItems === 1) {
       // 1-dish layout images
@@ -70,15 +71,26 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
       };
       return fourDishImages[name];
     } else if (totalItems === 4 && hasHandPulledNoodles) {
-      // 4-dish layout with Hand Pulled Noodles
-      const fourDishWithNoodlesImages: { [key: string]: string } = {
-        "Hand Pulled Noodles": "/lovable-uploads/776f4971-8e8c-48ab-a611-30e9342aa8f9.png",
-        "Dumplings": "/lovable-uploads/a280166a-fe37-449e-aabf-a9cbd216597c.png",
-        "Jasmine Rice": "/lovable-uploads/396f6ac4-2ea8-4818-b2c5-d99ca2d98bcc.png",
-        "Pork Belly & Spinach with Rice": "/lovable-uploads/323c888f-de59-4aec-8c3e-b140401617f3.png",
-        "Smashed Cucumber Salad": "/lovable-uploads/be27c81a-65ca-4b0d-8c1c-c5d0073e3146.png"
-      };
-      return fourDishWithNoodlesImages[name];
+      // Special handling for 4-dish layout with HPN when dumplings is disabled
+      // If this is the first other dish (taking dumpling's spot), use the "_ND" images
+      if (isFirstOther) {
+        const fourDishNoDumplingsImages: { [key: string]: string } = {
+          "Jasmine Rice": "/lovable-uploads/2d32f305-b524-4011-b562-a2ce4f2b8589.png",
+          "Pork Belly & Spinach with Rice": "/lovable-uploads/f329da00-dacc-4ec4-a88f-079185f4d210.png",
+          "Smashed Cucumber Salad": "/lovable-uploads/fdbf73c9-1f6a-47e2-9bc0-367dee2c5920.png"
+        };
+        return fourDishNoDumplingsImages[name];
+      } else {
+        // Regular 4-dish HPN images for non-first dishes
+        const fourDishWithNoodlesImages: { [key: string]: string } = {
+          "Hand Pulled Noodles": "/lovable-uploads/776f4971-8e8c-48ab-a611-30e9342aa8f9.png",
+          "Dumplings": "/lovable-uploads/a280166a-fe37-449e-aabf-a9cbd216597c.png",
+          "Jasmine Rice": "/lovable-uploads/396f6ac4-2ea8-4818-b2c5-d99ca2d98bcc.png",
+          "Pork Belly & Spinach with Rice": "/lovable-uploads/323c888f-de59-4aec-8c3e-b140401617f3.png",
+          "Smashed Cucumber Salad": "/lovable-uploads/be27c81a-65ca-4b0d-8c1c-c5d0073e3146.png"
+        };
+        return fourDishWithNoodlesImages[name];
+      }
     } else if (totalItems === 5 && !hasHandPulledNoodles) {
       // 5-dish layout without Hand Pulled Noodles
       const fiveDishImages: { [key: string]: string } = {
@@ -124,6 +136,7 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
   const getSpecialImageForLayout = () => {
     const totalItems = layoutContext?.totalItems || 1;
     const hasHandPulledNoodles = layoutContext?.hasHandPulledNoodles || false;
+    const isFirstOther = layoutContext?.isFirstOther || false;
     
     if (totalItems === 2) {
       return "/lovable-uploads/ff81af7b-1f85-427d-89a7-a335137919b4.png";
@@ -132,7 +145,12 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
     } else if (totalItems === 4 && !hasHandPulledNoodles) {
       return "/lovable-uploads/65d3a28f-8ad1-455a-9157-86ce7d8be3e5.png";
     } else if (totalItems === 4 && hasHandPulledNoodles) {
-      return "/lovable-uploads/289ecb88-7e6a-4805-a1d0-900bbe51d2b5.png";
+      // Special handling for 4-dish HPN layout - use "_ND" special image if first other
+      if (isFirstOther) {
+        return "/lovable-uploads/1c86ed61-49c0-4a32-a979-762a06e6c5be.png";
+      } else {
+        return "/lovable-uploads/289ecb88-7e6a-4805-a1d0-900bbe51d2b5.png";
+      }
     } else if (totalItems === 3) {
       return "/lovable-uploads/39d7dd3d-0eec-4bde-b60b-54563ce13b60.png";
     } else if (totalItems === 5 && !hasHandPulledNoodles) {
