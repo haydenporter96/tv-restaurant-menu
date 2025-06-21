@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 
 interface DishCardProps {
@@ -127,7 +126,7 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
     const hasHandPulledNoodles = layoutContext?.hasHandPulledNoodles || false;
     
     if (totalItems === 2) {
-      return "/lovable-uploads/412247f5-934b-49ae-911b-ecbc9d0176a7.png";
+      return "/lovable-uploads/ff81af7b-1f85-427d-89a7-a335137919b4.png";
     } else if (totalItems === 3 && !hasHandPulledNoodles) {
       return "/lovable-uploads/f6242254-0726-413d-a767-fb84cfdb90bc.png";
     } else if (totalItems === 4 && !hasHandPulledNoodles) {
