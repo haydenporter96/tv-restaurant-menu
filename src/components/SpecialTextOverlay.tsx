@@ -54,30 +54,30 @@ const SpecialTextOverlay: React.FC<SpecialTextOverlayProps> = ({ text, layoutCon
     const { totalItems, hasHandPulledNoodles, isFirstOther } = layoutContext;
     const textLength = text.length;
     
-    // Increased base font sizes for better utilization of space
+    // Better balanced font sizes based on actual safe zone dimensions
     let baseFontSize = 40;
     
     if (totalItems === 1) {
-      baseFontSize = 72; // Much larger for huge space (1435x566)
+      baseFontSize = 90; // Huge space (1435x566) - much larger
     } else if (totalItems === 2) {
-      baseFontSize = 56; // Larger for big space (772x536)
+      baseFontSize = 68; // Big space (772x536) - larger
     } else if (totalItems === 3) {
-      baseFontSize = 42; // Medium-large space
+      baseFontSize = 48; // Medium space
     } else if (totalItems === 4) {
       // Different sizes based on safe zone area
       if (hasHandPulledNoodles && !isFirstOther) {
-        baseFontSize = 32; // Smaller safe zone (379x253)
+        baseFontSize = 38; // Smaller safe zone (379x253) - increased
       } else {
-        baseFontSize = 38; // Larger safe zone (489x351)
+        baseFontSize = 44; // Larger safe zone (489x351)
       }
     } else if (totalItems === 5) {
       if (!hasHandPulledNoodles) {
-        baseFontSize = 26; // Very narrow space (505x204)
+        baseFontSize = 32; // Very narrow space (505x204) - increased
       } else {
-        baseFontSize = 32; // Small square space (379x253)
+        baseFontSize = 38; // Small square space (379x253) - increased
       }
     } else if (totalItems === 6) {
-      baseFontSize = 22; // Smallest space (245x164)
+      baseFontSize = 28; // Smallest space (245x164) - increased
     }
     
     // Adjust font size based on text length
@@ -95,7 +95,7 @@ const SpecialTextOverlay: React.FC<SpecialTextOverlayProps> = ({ text, layoutCon
     const finalSize = Math.round(baseFontSize * fontMultiplier);
     
     // Set minimum and maximum bounds
-    return Math.max(16, Math.min(finalSize, 96));
+    return Math.max(20, Math.min(finalSize, 120));
   };
 
   const safeZone = getSafeZone();
@@ -106,12 +106,12 @@ const SpecialTextOverlay: React.FC<SpecialTextOverlayProps> = ({ text, layoutCon
       className="absolute pointer-events-none flex items-center justify-center p-4"
       style={safeZone}
     >
-      <div className="text-center text-white font-bold leading-tight">
+      <div className="text-center text-black font-bold leading-tight">
         <span 
           className="drop-shadow-lg"
           style={{
             fontSize: `${fontSize}px`,
-            textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+            textShadow: '2px 2px 4px rgba(255,255,255,0.8)',
             lineHeight: '1.2'
           }}
         >
