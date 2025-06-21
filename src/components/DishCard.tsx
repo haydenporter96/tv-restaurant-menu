@@ -1,4 +1,6 @@
+
 import React, { useState } from 'react';
+import SpecialTextOverlay from './SpecialTextOverlay';
 
 interface DishCardProps {
   name: string;
@@ -185,7 +187,7 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
   };
 
   return (
-    <div className="w-full h-full overflow-hidden">
+    <div className="w-full h-full overflow-hidden relative">
       <img 
         src={getCurrentImageSrc()}
         alt={isSpecial ? `Special: ${specialText}` : name}
@@ -193,6 +195,13 @@ const DishCard: React.FC<DishCardProps> = ({ name, isSpecial, specialText, size,
         onError={handleImageError}
         onLoad={handleImageLoad}
       />
+      
+      {isSpecial && specialText && layoutContext && (
+        <SpecialTextOverlay 
+          text={specialText}
+          layoutContext={layoutContext}
+        />
+      )}
     </div>
   );
 };
