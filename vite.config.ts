@@ -19,4 +19,6 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // Add base path for GitHub Pages deployment
+  base: mode === 'production' ? '/tv-restaurant-menu/' : '/',
 }));
