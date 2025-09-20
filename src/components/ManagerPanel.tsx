@@ -1,23 +1,11 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
-
-function loadLocal<T>(key: string): T | null {
-  try {
-    const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : null;
-  } catch {
-    return null;
-  }
-}
-
-function saveLocal<T>(key: string, value: T) {
-  localStorage.setItem(key, JSON.stringify(value));
-}
 
 interface ManagerPanelProps {
   activeDishes: string[];
@@ -40,31 +28,17 @@ const ManagerPanel: React.FC<ManagerPanelProps> = ({
 }) => {
   const availableDishes = [
     "Hand Pulled Noodles",
-    "Dumplings",
+    "Dumplings", 
     "Jasmine Rice",
     "Pork Belly & Spinach with Rice",
     "Smashed Cucumber Salad"
   ];
 
-  useEffect(() => {
-    const savedDishes = loadLocal<string[]>("activeDishes");
-    const savedSpecialText = loadLocal<string>("specialText");
-    const savedIsSpecial = loadLocal<boolean>("isSpecialActive");
-
-    if (savedDishes) setActiveDishes(savedDishes);
-    if (savedSpecialText) setSpecialText(savedSpecialText);
-    if (savedIsSpecial !== null) setIsSpecialActive(savedIsSpecial);
-  }, []);
-
   const toggleDish = (dish: string) => {
     if (activeDishes.includes(dish)) {
-      const updated = activeDishes.filter(d => d !== dish);
-      setActiveDishes(updated);
-      saveLocal("activeDishes", updated);
+      setActiveDishes(activeDishes.filter(d => d !== dish));
     } else {
-      const updated = [...activeDishes, dish];
-      setActiveDishes(updated);
-      saveLocal("activeDishes", updated);
+      setActiveDishes([...activeDishes, dish]);
     }
   };
 
@@ -74,50 +48,69 @@ const ManagerPanel: React.FC<ManagerPanelProps> = ({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         <CardHeader>
-          <CardTitle className="text-xl">Manager Panel</CardTitle>
+          <CardTitle className="flex justify-between items-center">
+            <span>Manager Panel</span>
+            <Button variant="outline" onClick={onClose}>Close</Button>
+          </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div>
-              <Label>Special Text</Label>
-              <Textarea
-                value={specialText}
-                onChange={(e) => {
-                  setSpecialText(e.target.value);
-                  saveLocal("specialText", e.target.value);
-                }}
-              />
+        <CardContent className="space-y-6">
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Menu Status</h3>
+            <p className="text-sm text-gray-600 mb-2">
+              Currently showing {totalActive} items on the menu
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Regular Dishes</h3>
+            <div className="space-y-3">
+              {availableDishes.map((dish) => (
+                <div key={dish} className="flex items-center space-x-3 p-3 border rounded-lg">
+                  <Switch
+                    checked={activeDishes.includes(dish)}
+                    onCheckedChange={() => toggleDish(dish)}
+                  />
+                  <Label className="flex-1 cursor-pointer">{dish}</Label>
+                </div>
+              ))}
             </div>
-            <div className="flex items-center gap-2">
-              <Label>Enable Special</Label>
-              <Switch
-                checked={isSpecialActive}
-                onCheckedChange={(value) => {
-                  setIsSpecialActive(value);
-                  saveLocal("isSpecialActive", value);
-                }}
-              />
-            </div>
-            <div>
-              <Label>Available Dishes</Label>
-              <div className="grid grid-cols-2 gap-2 mt-2">
-                {availableDishes.map(dish => (
-                  <Button
-                    key={dish}
-                    variant={activeDishes.includes(dish) ? 'default' : 'outline'}
-                    onClick={() => toggleDish(dish)}
-                  >
-                    {dish}
-                  </Button>
-                ))}
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Today's Special</h3>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3 p-3 border rounded-lg">
+                <Switch
+                  checked={isSpecialActive}
+                  onCheckedChange={setIsSpecialActive}
+                />
+                <Label className="cursor-pointer">Enable Special</Label>
               </div>
+              
+              {isSpecialActive && (
+                <div>
+                  <Label htmlFor="special-text">Special Description</Label>
+                  <Textarea
+                    id="special-text"
+                    value={specialText}
+                    onChange={(e) => setSpecialText(e.target.value)}
+                    placeholder="Enter today's special..."
+                    className="mt-1"
+                  />
+                </div>
+              )}
             </div>
-            <div className="text-sm text-gray-500 mt-2">
-              Total Items Displayed: {totalActive}
+          </div>
+
+          <div className="pt-4 border-t">
+            <h4 className="font-semibold mb-2">Layout Information:</h4>
+            <div className="text-sm text-gray-600 space-y-1">
+              <p>• 1 item: 512×384px boxes (XLarge)</p>
+              <p>• 2 items: 448×320px boxes (Large)</p>
+              <p>• 3-4 items: 384×256px boxes (Medium)</p>
+              <p>• 5-6 items: 320×192px boxes (Small)</p>
+              <p>• Header: 1920×120px (Full width TV display)</p>
             </div>
-            <Button className="mt-4 w-full" onClick={onClose}>
-              Close
-            </Button>
           </div>
         </CardContent>
       </Card>
